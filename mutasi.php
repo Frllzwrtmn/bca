@@ -111,7 +111,7 @@ class BCA{
 		if(!file_exists("cookies_".$this->_userId.".txt"))
 		{
 			$login = $this->login();
-			if($login['status'] == "gagal")
+			if($login['status'] == "tidak berhasil")
 			{
 				return array("status" => false, "data" => array(), "message" => $login['msg']);
 			}
@@ -145,11 +145,11 @@ class BCA{
 			unlink("cookies_".$this->_userId.".txt");
 			goto Awal;
 		}else
-		if(strpos($result, "TRANSAKSI GAGAL"))
+		if(strpos($result, "TRANSAKSI GAGAL!"))
 		{
 			return array("status" => false, "data" => array(), "message" => "Transaksi Gagal");
 		}else
-		if(strpos($result, "TIDAK ADA TRANSAKSI")){
+		if(strpos($result, "TIDAK ADA TRANSAKSI APAPUN!")){
 			return array("status" => false, "data" => array(), "message" => "Tidak Ada Transaksi Pada Tanggal {$timeDari['d']}/{$timeDari['m']}/{$timeDari['y']}");
 		}
 		return $result;
@@ -168,7 +168,7 @@ class BCA{
 			$res = $this->getStr('<td bgcolor="#e0e0e0" colspan="2"><b>KETERANGAN</td>','<!--<tr>',$res);
 			$res = @str_replace($arr3,"",@str_replace($arr, "", $res));
 			$c = @explode("\n", $res);
-			$array = array("SALDO AWAL","SALDO AKHIR","MUTASI KREDIT","MUTASI DEBET");
+			$array = array("SALDO SEMULA","SALDO AKHIR","MUTASI KREDIT","MUTASI DEBIT");
 			$results['status'] = true;
 			$result = array();
 			for($i=0;$i<count($array);$i++){
@@ -221,7 +221,7 @@ echo color('blue', "[+]")." =======================\n";
 echo color('blue', "[+]")." 1. Cek Saldo\n";
 echo color('blue', "[+]")." 2. Cek Mutasi\n";
 echo color('blue', "[+]")." =======================\n";
-echo color('blue', "[+]")." Silahkan pilih: ";
+echo color('blue', "[+]")." Silahkan pilih sobat : ";
 $tools = trim(fgets(STDIN));
 
 if ($tools == 1) {
